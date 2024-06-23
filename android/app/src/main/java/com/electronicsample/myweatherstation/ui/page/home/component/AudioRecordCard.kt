@@ -41,7 +41,7 @@ fun AudioRecordCard() {
             Text(
                 text = stringResource(
                     id = R.string.audio_record_card_title,
-                    formatArgs = arrayOf("12 / 04 / 2023 à 14 h27")
+                    formatArgs = arrayOf(12, "12 / 04 / 2023 à 14 h27")
                 ),
                 fontWeight = FontWeight.Bold
             )
