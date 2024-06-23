@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MyWeatherStation</string>
+
+    <string name="humidity_level">Humidity: %1$d%%</string>
+    <string name="pressure_level">Pressure: %1$dPa</string>
+    <string name="last_refresh">Last refresh: %1$s</string>
 </resources>
