@@ -4,4 +4,6 @@
     <string name="humidity_level">Humidity: %1$d%%</string>
     <string name="pressure_level">Pressure: %1$dPa</string>
     <string name="last_refresh">Last refresh: %1$s</string>
+
+    <string name="audio_record_card_title">Registered on %1$s</string>
 </resources>
