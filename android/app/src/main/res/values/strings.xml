@@ -6,4 +6,6 @@
     <string name="last_refresh">Last refresh: %1$s</string>
 
     <string name="audio_record_card_title">#%1$d - Registered on %2$s</string>
+
+    <string name="audio_records">Audio records</string>
 </resources>

@@ -20,5 +20,9 @@ object Spacings {
     val LargeSpacing: Dp
         @Composable
         get() = 32.dp
+
+    val HugeSpacing: Dp
+        @Composable
+        get() = 64.dp
 }
 
