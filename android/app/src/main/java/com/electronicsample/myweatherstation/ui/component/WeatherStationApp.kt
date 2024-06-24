@@ -1,5 +1,7 @@
 package com.electronicsample.myweatherstation.ui.component
 
+import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -11,29 +13,45 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.electronicsample.myweatherstation.R
-import com.electronicsample.myweatherstation.ui.page.home.HomePage
+
+enum class NavigationDestination(val destination: String) {
+    Home(destination = "home"),
+    ArduinoController(destination = "arduino_controller"),
+    Logs(destination = "logs")
+}
 
 @Composable
 fun WeatherStationApp() {
-    var index by remember {
-        mutableIntStateOf(0)
+    val navController = rememberNavController()
+
+    // Helper method for navigating
+    fun navigateTo(destination: NavigationDestination) {
+        navController.navigate(destination.destination) {
+            launchSingleTop = true
+            restoreState = true
+        }
     }
+
+    val currentDestination by navController.currentBackStackEntryAsState()
+    val currentRoute = currentDestination?.destination?.route
 
     Scaffold(
         bottomBar = {
             NavigationBar {
                 NavigationBarItem(
-                    selected = index == 0,
+                    selected = currentRoute == NavigationDestination.Home.destination,
                     onClick = {
-                        index = 0
+                        navigateTo(NavigationDestination.Home)
                     },
                     icon = {
                         Icon(
@@ -47,9 +65,9 @@ fun WeatherStationApp() {
                 )
 
                 NavigationBarItem(
-                    selected = index == 1,
+                    selected = currentRoute == NavigationDestination.ArduinoController.destination,
                     onClick = {
-                        index = 1
+                        navigateTo(NavigationDestination.ArduinoController)
                     },
                     icon = {
                         Icon(
@@ -63,9 +81,9 @@ fun WeatherStationApp() {
                 )
 
                 NavigationBarItem(
-                    selected = index == 2,
+                    selected = currentRoute == NavigationDestination.Logs.destination,
                     onClick = {
-                        index = 2
+                        navigateTo(NavigationDestination.Logs)
                     },
                     icon = {
                         Icon(
@@ -81,7 +99,7 @@ fun WeatherStationApp() {
         }
     ) { innerPadding ->
         Surface(modifier = Modifier.padding(innerPadding)) {
-            HomePage()
+            NavigationRouter(navController = navController)
         }
     }
 }
