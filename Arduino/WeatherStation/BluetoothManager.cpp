@@ -1,3 +1,4 @@
+#include "BLECharacteristic.h"
 #include "BluetoothManager.h"
 #include <Arduino.h>
 
@@ -30,6 +31,10 @@ BluetoothManager::BluetoothManager() {
   BLE2902 *ble2902 = new BLE2902();
   ble2902->setNotifications(true);
   txCharacteristic->addDescriptor(ble2902);
+
+  // Initiate the receiver characteristic
+  BLECharacteristic *rxCharacteristic = service->createCharacteristic(CHARACTERISTIC_UUID_RX, BLECharacteristic::PROPERTY_WRITE);
+  rxCharacteristic->setCallbacks(this);
 }
 
 void BluetoothManager::start() {
@@ -65,4 +70,8 @@ void BluetoothManager::sendValue(String data) {
 
 bool BluetoothManager::isConnected() {
   return connected;
+}
+
+void BluetoothManager::onWrite(BLECharacteristic *pCharacteristic) {
+  println("onWrite -> " + pCharacteristic->getValue(), "[BluetoothManager]");
 }

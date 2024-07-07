@@ -1,10 +1,11 @@
+#include "BLECharacteristic.h"
 #ifndef BLUETOOTH_MANAGER
 #define BLUETOOTH_MANAGER
 
 #include <BLEDevice.h>
 #include <BLE2902.h>
 
-class BluetoothManager : public BLEServerCallbacks {
+class BluetoothManager : public BLEServerCallbacks, public BLECharacteristicCallbacks {
   public:
     BluetoothManager();
 
@@ -19,6 +20,8 @@ class BluetoothManager : public BLEServerCallbacks {
     void sendValue(String data);
 
     bool isConnected();
+
+    void onWrite(BLECharacteristic *pCharacteristic);
   
   private:
     BLEServer *server;
